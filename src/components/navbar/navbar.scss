@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: cornflowerblue;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+  &__user {
+    display: flex;
+    align-items: center;
+  }
+
+  &__name {
+    padding-right: 10px;
+    color: #fff;
+    font-size: 18px;
+    text-transform: capitalize;
+  }
+
+  &__menu {
+    color: #ffffff;
+  }
+}

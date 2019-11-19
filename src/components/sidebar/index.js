@@ -1,13 +1,19 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import CssBaseline from '@material-ui/core/CssBaseline'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { Link } from 'react-router-dom'
+
+//Import Icon
+import TimelineIcon from '@material-ui/icons/Timeline';
+import EventIcon from '@material-ui/icons/Event';
+import ScoreIcon from '@material-ui/icons/Score';
+import CategoryIcon from '@material-ui/icons/Category';
+import CreateIcon from '@material-ui/icons/Create';
 
 
 const drawerWidth = 240;
@@ -17,46 +23,23 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
 
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
   },
   drawerPaper: {
+    top: '83px',
     width: drawerWidth,
+    position: 'absolute'
   },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
+  link: {
+    textDecoration: 'none',
+    color: '#000000de'
+  }
 }));
 
-export default function PersistentDrawerLeft({handleOpen, isOpen}) {
+export default function PersistentDrawerLeft({isOpen}) {
   const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(isOpen);
- 
 
   return (
     <div className={classes.root}>
@@ -70,22 +53,26 @@ export default function PersistentDrawerLeft({handleOpen, isOpen}) {
           paper: classes.drawerPaper,
         }}
       >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={() => handleOpen(false)}>          
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        {/* <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
+        <List>
+          {ListCategory.map((item) => (
+            <Link to={item.path} className={classes.link} key={item.title}>
+              <ListItem button >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} />
+              </ListItem>
+            </Link>           
           ))}
-        </List>
-        <Divider /> */}       
+        </List>            
       </Drawer>
     </div>
   );
 }
+
+
+const ListCategory = [
+  { title: 'Счет', path: '/', icon: <ScoreIcon/> },
+  { title: 'История', path: '/history', icon: <TimelineIcon/> },
+  { title: 'Планирование', path: '/planning', icon: <EventIcon/> },
+  { title: 'Новая запись', path: '/record', icon: <CreateIcon/> },
+  { title: 'Категории', path: '/Categories', icon: <CategoryIcon/> }
+];

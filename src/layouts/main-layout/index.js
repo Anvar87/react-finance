@@ -1,20 +1,18 @@
 import React,{useState} from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import Navbar from '../../components/navbar'
-import Sidebar from '../../components/sidebar'
 import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import Navbar from '../../components/navbar/index';
+import Sidebar from '../../components/sidebar';
+import Score from '../../components/score';
+import Record from '../../components/record';
+import {Route} from 'react-router-dom'
+
+
 
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -34,26 +32,30 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const MainLayout = () => {
-  const [isOpen, setIsOpen] = useState(false)
+const MainLayout = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
-  const handleOpen = (value) => {
-    setIsOpen(value)
-  }
+  const handleOpen = () => {
+    setIsOpen(!isOpen)
+  };
 
-  return (    
-    <>
-     <Navbar handleOpen={handleOpen} isOpen={isOpen}></Navbar>
-     <Sidebar handleOpen={handleOpen} isOpen={isOpen}></Sidebar>
-     <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: isOpen,
-        })}
-      >          
-      </main>
-    </>
-   
-  )
-}
+  console.log(props);
+  return (
+      <>
+        <Navbar open={handleOpen} />
+        <Sidebar handleOpen={handleOpen} isOpen={isOpen}/>
+        <main
+            className={clsx (classes.content, {
+              [classes.contentShift]: isOpen,
+            })}
+        >
+          <div style={{marginLeft: '240px'}}>
+            <Route exact path='/' component={Score}/>
+            <Route path='/record' component={Record}/>
+          </div>
+        </main>
+      </>
+  );
+};
 
 export default MainLayout
